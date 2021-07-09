@@ -102,10 +102,22 @@
     ```
    
 1. `sudo echo string > /root/new_file` не даст выполнить перенаправление под обычным пользователем, так как перенаправлением занимается процесс shell'а, который запущен без `sudo` под вашим пользователем. Для решения данной проблемы можно использовать конструкцию `echo string | sudo tee /root/new_file`. Узнайте что делает команда `tee` и почему в отличие от `sudo echo` команда с `sudo tee` будет работать.  
-   **Решение:**  
-    ```bash
-    
+   **Решение:**
+    Команда  tee сохраняет вывод команды в файл. Пример:
+   ```bash
+   vagrant@vagrant:~$ echo netoloy | tee result
+   netoloy
+   vagrant@vagrant:~$ cat result
+   netoloy
     ```
+   Перенаправление выполняет процесс shell'a, который запущен без sudo и не имеет доступа для записи в root
+   Отличие tee в том, что это команда, которую можно запустить под sudo
+   ```bash
+   vagrant@vagrant:~$ echo string | sudo tee /root/new_file
+   string
+   vagrant@vagrant:~$ sudo cat /root/new_file
+   string
+   ```
 
  
  ---
