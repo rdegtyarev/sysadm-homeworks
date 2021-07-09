@@ -91,19 +91,37 @@
 	Почитайте, почему так происходит, и как изменить поведение.  
    **Решение:**  
     ```bash
+    Команда tty возвращает имя файла текущего терминала.
+    через ssh команды запускаются не в терминале, поэтому возвращается ответ not a tty.
     
+    Изменить поведение можно добавив параметр -t:
+    vagrant@vagrant:~$ ssh -t localhost 'tty'
+    /dev/pts/1
     ```
     
 
 1. Бывает, что есть необходимость переместить запущенный процесс из одной сессии в другую. Попробуйте сделать это, воспользовавшись `reptyr`. Например, так можно перенести в `screen` процесс, который вы запустили по ошибке в обычной SSH-сессии.  
    **Решение:**  
     ```bash
-    
+   vagrant@vagrant:~$ ps -a
+   PID TTY          TIME CMD
+   2130 pts/1    00:00:00 sudo
+   2131 pts/1    00:00:08 reptyr
+   2193 pts/2    00:00:00 ping
+   2202 pts/0    00:00:00 ps
+   vagrant@vagrant:~$ sudo reptyr -T 2131
+   Unable to attach to pid 2131: Permission denied
+   vagrant@vagrant:~$ logout
+   vagrant@vagrant:~$ Connection to 127.0.0.1 closed by remote host.
+   Connection to 127.0.0.1 closed.
+   top - 13:11:26 up 1 min,  2 users,  load average: 0.00, 0.00, 0.00
+
     ```
    
 1. `sudo echo string > /root/new_file` не даст выполнить перенаправление под обычным пользователем, так как перенаправлением занимается процесс shell'а, который запущен без `sudo` под вашим пользователем. Для решения данной проблемы можно использовать конструкцию `echo string | sudo tee /root/new_file`. Узнайте что делает команда `tee` и почему в отличие от `sudo echo` команда с `sudo tee` будет работать.  
-   **Решение:**
-    Команда  tee сохраняет вывод команды в файл. Пример:
+   **Решение:**  
+    Команда  tee сохраняет вывод команды в файл.  
+   Пример:
    ```bash
    vagrant@vagrant:~$ echo netoloy | tee result
    netoloy
