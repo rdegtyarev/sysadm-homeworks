@@ -34,11 +34,9 @@
     first
     second
     third
-    vagrant@vagrant:~/tmp/test$ cat newfile > result
-    vagrant@vagrant:~/tmp/test$ cat result
-    first
-    second
-    third
+    vagrant@vagrant:~$ grep 0<newfile second > outfile
+    vagrant@vagrant:~$ cat outfile 
+    second 
     ```
 
 6. Получится ли вывести находясь в графическом режиме данные из PTY в какой-либо из эмуляторов TTY? Сможете ли вы наблюдать выводимые данные?  
