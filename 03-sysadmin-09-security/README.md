@@ -43,9 +43,58 @@ Password:
 
 ```
 4. Проверьте на TLS уязвимости произвольный сайт в интернете.
-
+```bash
+vagrant@vagrant:~$ git clone --depth 1 https://github.com/drwetter/testssl.sh.gitcd testssl.sh
+vagrant@vagrant:~$  ./testssl.sh -e --fast --parallel https://localhost #из предыдущего примера
+vagrant@vagrant:~$ ./testssl.sh -U --sneaky https://localhost #из предыдущего примера
+```
 5. Установите на Ubuntu ssh сервер, сгенерируйте новый приватный ключ. Скопируйте свой публичный ключ на другой сервер. Подключитесь к серверу по SSH-ключу.
+```bash
+# сервер (в vagrant ubuntu ssh уже установлен, команды вернули ответ что все ок). Адрес хоста 192.168.0.107
+vagrant@vagrant:~$ apt install openssh-server
+vagrant@vagrant:~$ systemctl start sshd.service
+vagrant@vagrant:~$ systemctl enable sshd.service
 
+# клиент
+roman@Laptop-15-ec1xxx: ssh-keygen
+# копируем публичный ключ на сервер
+roman@Laptop-15-ec1xxx: ssh-copy-id vagrant@192.168.0.107
+# подключаемся
+roman@Laptop-15-ec1xxx: ssh vagrant@192.168.0.107
+
+```
 6. Переименуйте файлы ключей из задания 5. Настройте файл конфигурации SSH клиента, так чтобы вход на удаленный сервер осуществлялся по имени сервера.
+```bash
+roman@Laptop-15-ec1xxx:~/.ssh$ touch config
+roman@Laptop-15-ec1xxx:~/.ssh$ vim config 
+##
+Host vagrant_server
+  HostName 192.168.0.107
+  IdentityFile ~/.ssh/vagrant_server.key
+  User vagrant
+##
 
+roman@Laptop-15-ec1xxx:~/.ssh$ mv id_rsa vagrant_server
+roman@Laptop-15-ec1xxx:~/.ssh$ ssh vagrant_server
+# подключение успешно
+```
 7. Соберите дамп трафика утилитой tcpdump в формате pcap, 100 пакетов. Откройте файл pcap в Wireshark.
+```bash
+vagrant@vagrant:~$ sudo apt install tcpdump
+Reading package lists... Done
+Building dependency tree       
+Reading state information... Done
+tcpdump is already the newest version (4.9.3-4).
+0 upgraded, 0 newly installed, 0 to remove and 54 not upgraded.
+
+vagrant@vagrant:~$ tcpdump -D
+1.eth0 [Up, Running]
+2.eth1 [Up, Running]
+3.lo [Up, Running, Loopback]
+4.any (Pseudo-device that captures on all interfaces) [Up, Running]
+5.bluetooth-monitor (Bluetooth Linux Monitor) [none]
+6.nflog (Linux netfilter log (NFLOG) interface) [none]
+7.nfqueue (Linux netfilter queue (NFQUEUE) interface) [none]
+
+
+```
