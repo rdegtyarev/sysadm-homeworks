@@ -88,13 +88,13 @@ tcpdump is already the newest version (4.9.3-4).
 0 upgraded, 0 newly installed, 0 to remove and 54 not upgraded.
 
 user@ubuntu-desktop:~$ tcpdump -D
-user@ubuntu-desktop:~$ tcpdump -D
 1.enp0s3 [Up, Running]
 2.lo [Up, Running, Loopback]
 3.any (Pseudo-device that captures on all interfaces) [Up, Running]
 4.bluetooth-monitor (Bluetooth Linux Monitor) [none]
 5.nflog (Linux netfilter log (NFLOG) interface) [none]
 6.nfqueue (Linux netfilter queue (NFQUEUE) interface) [none]
+
 user@ubuntu-desktop:~$ sudo tcpdump -i enp0s3 -w dump.pcap -c 100
 tcpdump: listening on enp0s3, link-type EN10MB (Ethernet), capture size 262144 bytes
 100 packets captured
