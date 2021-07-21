@@ -80,21 +80,27 @@ roman@Laptop-15-ec1xxx:~/.ssh$ ssh vagrant_server
 ```
 7. Соберите дамп трафика утилитой tcpdump в формате pcap, 100 пакетов. Откройте файл pcap в Wireshark.
 ```bash
-vagrant@vagrant:~$ sudo apt install tcpdump
+user@ubuntu-desktop:~$ sudo apt install tcpdump
 Reading package lists... Done
 Building dependency tree       
 Reading state information... Done
 tcpdump is already the newest version (4.9.3-4).
 0 upgraded, 0 newly installed, 0 to remove and 54 not upgraded.
 
-vagrant@vagrant:~$ tcpdump -D
-1.eth0 [Up, Running]
-2.eth1 [Up, Running]
-3.lo [Up, Running, Loopback]
-4.any (Pseudo-device that captures on all interfaces) [Up, Running]
-5.bluetooth-monitor (Bluetooth Linux Monitor) [none]
-6.nflog (Linux netfilter log (NFLOG) interface) [none]
-7.nfqueue (Linux netfilter queue (NFQUEUE) interface) [none]
+user@ubuntu-desktop:~$ tcpdump -D
+user@ubuntu-desktop:~$ tcpdump -D
+1.enp0s3 [Up, Running]
+2.lo [Up, Running, Loopback]
+3.any (Pseudo-device that captures on all interfaces) [Up, Running]
+4.bluetooth-monitor (Bluetooth Linux Monitor) [none]
+5.nflog (Linux netfilter log (NFLOG) interface) [none]
+6.nfqueue (Linux netfilter queue (NFQUEUE) interface) [none]
+user@ubuntu-desktop:~$ sudo tcpdump -i enp0s3 -w dump.pcap -c 100
+tcpdump: listening on enp0s3, link-type EN10MB (Ethernet), capture size 262144 bytes
+100 packets captured
+230 packets received by filter
+0 packets dropped by kernel
 
+#файл dump.pcap успешно открыл в Wireshark
 
 ```
