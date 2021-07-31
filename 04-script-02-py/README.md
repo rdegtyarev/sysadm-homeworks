@@ -100,6 +100,28 @@
 ```
 
 1. Наша команда разрабатывает несколько веб-сервисов, доступных по http. Мы точно знаем, что на их стенде нет никакой балансировки, кластеризации, за DNS прячется конкретный IP сервера, где установлен сервис. Проблема в том, что отдел, занимающийся нашей инфраструктурой очень часто меняет нам сервера, поэтому IP меняются примерно раз в неделю, при этом сервисы сохраняют за собой DNS имена. Это бы совсем никого не беспокоило, если бы несколько раз сервера не уезжали в такой сегмент сети нашей компании, который недоступен для разработчиков. Мы хотим написать скрипт, который опрашивает веб-сервисы, получает их IP, выводит информацию в стандартный вывод в виде: <URL сервиса> - <его IP>. Также, должна быть реализована возможность проверки текущего IP сервиса c его IP из предыдущей проверки. Если проверка будет провалена - оповестить об этом в стандартный вывод сообщением: [ERROR] <URL сервиса> IP mismatch: <старый IP> <Новый IP>. Будем считать, что наша разработка реализовала сервисы: drive.google.com, mail.google.com, google.com.
+```python
+#!/usr/bin/env python3
+
+import socket
+
+hosts_list = [{'host':'drive.google.com','old_ip':'142.250.150.194','new_ip':''},
+           {'host':'mail.google.com','old_ip':'142.250.150.83','new_ip':''},
+           {'host':'google.com','old_ip':'64.233.165.138','new_ip':''}]
+errors_list = []
+
+print('Scan result')
+for index, hosts_item in enumerate(hosts_list):
+    result = socket.gethostbyname(hosts_item['host'])
+    hosts_list[index]['new_ip'] = result
+    print(f"http://{hosts_item['host']} - {result}")
+    if hosts_list[index]['new_ip'] != hosts_list[index]['old_ip']:
+        errors_list.append(f"[ERROR] http://{hosts_item['host']} IP mismatch: {hosts_list[index]['old_ip']} {hosts_list[index]['new_ip']}")
+
+for errors_item in errors_list:
+    print(errors_item)
+# скрипт также лежит рядом с README.md
+```
 
 ## Дополнительное задание (со звездочкой*) -  необязательно к выполнению
 
