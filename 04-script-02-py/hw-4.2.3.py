@@ -1,8 +1,11 @@
 #!/usr/bin/env python3
 
 import os
-# Задаем рабочую директорию и передаем ее bash_command на следующем шаге
-full_dir = '~/PycharmProjects/sysadm-homeworks'
+import sys
+
+# при запуске скрипта в параметр нужно передать путь до директории
+# параметр передаем в переменную full_dir
+full_dir = sys.argv[1]
 bash_command = ["cd " + full_dir, "git status"]
 result_os = os.popen(' && '.join(bash_command)).read()
 
