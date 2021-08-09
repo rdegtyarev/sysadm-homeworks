@@ -7,25 +7,23 @@
 
 1. Найдите полный хеш и комментарий коммита, хеш которого начинается на `aefea`.  
 ```bash
-roman@Laptop:~/PycharmProjects/terraform$ git show aefea
+git show aefea --no-patch
 commit aefead2207ef7e2aa5dc81a34aedf0cad4c32545
 Author: Alisdair McDiarmid <alisdair@users.noreply.github.com>
 Date:   Thu Jun 18 10:29:58 2020 -0400
 
     Update CHANGELOG.md
-
-...
 ```
 2. Какому тегу соответствует коммит `85024d3`?  
 ```bash
-git show --pretty=oneline 85024d3
-85024d3100126de36331c6982bfaac02cdab9e76 (tag: v0.12.23) v0.12.23
+git show 85024d3 --oneline --no-patch
+85024d310 (tag: v0.12.23) v0.12.23
 ```
  Тег v0.12.23
 
 3. Сколько родителей у коммита `b8d720`? Напишите их хеши.  
 ```bash
-git show b8d720^
+git show b8d720^ --no-patch
 commit 56cd7859e05c36c06b56d013b55a252d0bb7e158
 Merge: 58dcac4b7 ffbcf5581
 Author: Chris Griggs <cgriggs@hashicorp.com>
@@ -37,55 +35,9 @@ Date:   Mon Jan 13 13:19:09 2020 -0800
 ```
  Комит имеет двух родителей. Результат merge коммитов 58dcac4b7 ffbcf5581  
 
-4. Перечислите хеши и комментарии всех коммитов которые были сделаны между тегами  v0.12.23 и v0.12.24.  
-
- Получаем хеши комита, помеченного тегом v0.12.23.  
+4. Перечислите хеши и комментарии всех коммитов которые были сделаны между тегами  v0.12.23 и v0.12.24.
 ```bash
-git show v0.12.23
-tag v0.12.23
-Tagger: TeamCity <teamcity@ip-192-168-0-113.us-west-2.compute.internal>
-Date:   Thu Mar 5 20:56:10 2020 +0000
-
-v0.12.23
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQEcBAABAgAGBQJeYWdqAAoJEFGFLYc0j/xMPDIH/jYhX2jO10Ov8y3zSWPbvKWX
-Q8MbyKs7c65+9NRNbhfIoez6mVUz2VF63sza4HXocm60Ckd38a0xb8gI56XbjDMC
-tm440iT7xpd/6NlbDDcIcdppAqEOpdFT6eIK1ndYkn61Ks6KSx5i3SCeSk4wwAvg
-jPPoqm1ExJSEjSA+gR2HPJuaHDgoXFng2w9i3gzE7IQiFjdS4fJX4GdJj6Ay4HDM
-wU4HTPG84vLEiG5rRR5xm0Pqmzt40a53ihRCrXEYrAHT1dgY9LuYcdYySAAvaXq2
-jUTrN9ckGoIaxZpCAOVCHiojxCG09ReBgAYQ6YuBbqtR80RV8TBKdCR9S4n9Wls=
-=13hk
------END PGP SIGNATURE-----
-
-commit 85024d3100126de36331c6982bfaac02cdab9e76 (tag: v0.12.23)
-```
- Получаем хеши комита, помеченного тегом v0.12.24.  
-```bash
-git show v0.12.24
-tag v0.12.24
-Tagger: TeamCity <teamcity@ip-192-168-0-237.us-west-2.compute.internal>
-Date:   Thu Mar 19 15:04:05 2020 +0000
-
-v0.12.24
------BEGIN PGP SIGNATURE-----
-Version: GnuPG v1
-
-iQEcBAABAgAGBQJec4nlAAoJEFGFLYc0j/xMSvoIAK0z57IgGyIs8ghpFaksZkRl
-XJOrZjP1szlXRMAoMNkef46VUDNjrdPBo+xSHuRxbxFpC2vQwqtwA3Dk8W/KaX5F
-AkJXqtWlpyZiWrNMWsXt0AN8CjiaIF5zgrIWvpawGbPU6APOC6FpQiG8WFUobX9p
-yRKMOTARAYO1bNgSr8Tgtvv2djRl3PIe6Im9/qyi7S2cFCV9ql8nRLBMPPvZ5xzr
-3gehdozVGSJ2C1rI0R3DXAu+q9W6KZsZOhBEsBb/2X/M9chiH6JDbT7bvvgXX34P
-gyvcohmWnVwm5Oaurco1hdZFipN+qGMc3EEB3sqoSW0ASTmjocYr44hT3O7/iD0=
-=UdsJ
------END PGP SIGNATURE-----
-
-commit 33ff1c03bb960b332be3af2e333462dde88b279e (tag: v0.12.24)
-```
- Получаем информацию о комитах в этом диапазоне  
-```bash
-git log --pretty=format:'%h %an %ad %s' 85024d3100126de36331c6982bfaac02cdab9e76..33ff1c03bb960b332be3af2e333462dde88b279e
+git log --pretty=format:'%h %an %ad %s' v0.12.23..v0.12.24
 33ff1c03b tf-release-bot Thu Mar 19 15:04:05 2020 +0000 v0.12.24
 b14b74c49 Chris Griggs Tue Mar 10 08:59:20 2020 -0700 [Website] vmc provider links
 3f235065b Alisdair McDiarmid Thu Mar 19 10:39:31 2020 -0400 Update CHANGELOG.md
