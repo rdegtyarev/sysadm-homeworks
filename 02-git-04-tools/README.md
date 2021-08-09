@@ -20,9 +20,9 @@ Date:   Thu Jun 18 10:29:58 2020 -0400
 ```bash
 git show --pretty=oneline 85024d3
 85024d3100126de36331c6982bfaac02cdab9e76 (tag: v0.12.23) v0.12.23
-...
-# Тег v0.12.23
 ```
+# Тег v0.12.23
+
 3. Сколько родителей у коммита `b8d720`? Напишите их хеши.  
 ```bash
 git show b8d720^
@@ -34,11 +34,13 @@ Date:   Mon Jan 13 13:19:09 2020 -0800
     Merge pull request #23857 from hashicorp/cgriggs01-stable
     
     [cherry-pick]add checkpoint links
-# Комит имеет двух родителей. Результат merge коммитов 58dcac4b7 ffbcf5581
 ```
+# Комит имеет двух родителей. Результат merge коммитов 58dcac4b7 ffbcf5581
+
 4. Перечислите хеши и комментарии всех коммитов которые были сделаны между тегами  v0.12.23 и v0.12.24.  
-```bash
+
 # Получаем хеши комита, помеченного тегом v0.12.23.
+```bash
 git show v0.12.23
 tag v0.12.23
 Tagger: TeamCity <teamcity@ip-192-168-0-113.us-west-2.compute.internal>
@@ -58,8 +60,9 @@ jUTrN9ckGoIaxZpCAOVCHiojxCG09ReBgAYQ6YuBbqtR80RV8TBKdCR9S4n9Wls=
 -----END PGP SIGNATURE-----
 
 commit 85024d3100126de36331c6982bfaac02cdab9e76 (tag: v0.12.23)
-
+```
 # Получаем хеши комита, помеченного тегом v0.12.24.
+```bash
 git show v0.12.24
 tag v0.12.24
 Tagger: TeamCity <teamcity@ip-192-168-0-237.us-west-2.compute.internal>
@@ -79,8 +82,9 @@ gyvcohmWnVwm5Oaurco1hdZFipN+qGMc3EEB3sqoSW0ASTmjocYr44hT3O7/iD0=
 -----END PGP SIGNATURE-----
 
 commit 33ff1c03bb960b332be3af2e333462dde88b279e (tag: v0.12.24)
-
+```
 # Получаем информацию о комитах в этом диапазоне
+```bash
 git log --pretty=format:'%h %an %ad %s' 85024d3100126de36331c6982bfaac02cdab9e76..33ff1c03bb960b332be3af2e333462dde88b279e
 33ff1c03b tf-release-bot Thu Mar 19 15:04:05 2020 +0000 v0.12.24
 b14b74c49 Chris Griggs Tue Mar 10 08:59:20 2020 -0700 [Website] vmc provider links
@@ -92,18 +96,19 @@ d5f9411f5 Alisdair McDiarmid Tue Mar 17 13:21:35 2020 -0400 command: Fix bug whe
 4b6d06cc5 Pam Selle Tue Mar 10 12:04:50 2020 -0400 Update CHANGELOG.md
 dd01a3507 Kristin Laemmert Thu Mar 5 16:32:43 2020 -0500 Update CHANGELOG.md
 225466bc3 tf-release-bot Thu Mar 5 21:12:06 2020 +0000 Cleanup after v0.12.23 release
-
-
-
 ```
+
 5. Найдите коммит в котором была создана функция `func providerSource`, ее определение в коде выглядит 
 так `func providerSource(...)` (вместо троеточего перечислены аргументы).  
-```bash
+
 # Ищем файл с данной функцией
-it grep 'func providerSource'
+```bash
+git grep 'func providerSource'
 provider_source.go:func providerSource(configs []*cliconfig.ProviderInstallation, services *disco.Disco) (getproviders.Source, tfdiags.Diagnostics) {
 provider_source.go:func providerSourceForCLIConfigLocation(loc cliconfig.ProviderInstallationLocation, services *disco.Disco) (getproviders.Source, tfdiags.Diagnostics) {
+```
 # Ищем все изменения данной функции в найденном файле
+```bash
 git log --oneline -L:providerSource:provider_source.go
 5af1e6234 main: Honor explicit provider_installation CLI config when present
 
@@ -157,12 +162,12 @@ diff --git a/provider_source.go b/provider_source.go
 +       // yet the new configuration constructs to customize provider search
 +       // locations. That'll come later.
 +       // For now, we have a fixed set of search directories:
-
+```
 # Найдено три коммита:
 # 5af1e6234 main: Honor explicit provider_installation CLI config when present
 # 92d6a30bb main: skip direct provider installation for providers available locally
 # 8c928e835 main: Consult local directories as potential mirrors of providers
-```
+
 6. Найдите все коммиты в которых была изменена функция `globalPluginDirs`.  
 ```bash
 git log -S'globalPluginDirs' --oneline
@@ -176,9 +181,9 @@ git log --pretty=format:'%h %an %ad %s' -S'synchronizedWriters'
 bdfea50cc James Bardin Mon Nov 30 18:02:04 2020 -0500 remove unused
 fd4f7eb0b James Bardin Wed Oct 21 13:06:23 2020 -0400 remove prefixed io
 5ac311e2a Martin Atkins Wed May 3 16:25:41 2017 -0700 main: synchronize writes to VT100-faker on Windows
- 
-#  Автор Martin Atkins, функция создана в коммите 5ac311e2a
 ```
+#  Автор Martin Atkins, функция создана в коммите 5ac311e2a
+
 
  ---
 
