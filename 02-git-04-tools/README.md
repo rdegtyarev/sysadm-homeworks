@@ -21,7 +21,7 @@ Date:   Thu Jun 18 10:29:58 2020 -0400
 git show --pretty=oneline 85024d3
 85024d3100126de36331c6982bfaac02cdab9e76 (tag: v0.12.23) v0.12.23
 ```
-# Тег v0.12.23
+ Тег v0.12.23
 
 3. Сколько родителей у коммита `b8d720`? Напишите их хеши.  
 ```bash
@@ -35,11 +35,11 @@ Date:   Mon Jan 13 13:19:09 2020 -0800
     
     [cherry-pick]add checkpoint links
 ```
-# Комит имеет двух родителей. Результат merge коммитов 58dcac4b7 ffbcf5581
+ Комит имеет двух родителей. Результат merge коммитов 58dcac4b7 ffbcf5581
 
 4. Перечислите хеши и комментарии всех коммитов которые были сделаны между тегами  v0.12.23 и v0.12.24.  
 
-# Получаем хеши комита, помеченного тегом v0.12.23.
+ Получаем хеши комита, помеченного тегом v0.12.23.
 ```bash
 git show v0.12.23
 tag v0.12.23
@@ -61,7 +61,7 @@ jUTrN9ckGoIaxZpCAOVCHiojxCG09ReBgAYQ6YuBbqtR80RV8TBKdCR9S4n9Wls=
 
 commit 85024d3100126de36331c6982bfaac02cdab9e76 (tag: v0.12.23)
 ```
-# Получаем хеши комита, помеченного тегом v0.12.24.
+ Получаем хеши комита, помеченного тегом v0.12.24.
 ```bash
 git show v0.12.24
 tag v0.12.24
@@ -83,7 +83,7 @@ gyvcohmWnVwm5Oaurco1hdZFipN+qGMc3EEB3sqoSW0ASTmjocYr44hT3O7/iD0=
 
 commit 33ff1c03bb960b332be3af2e333462dde88b279e (tag: v0.12.24)
 ```
-# Получаем информацию о комитах в этом диапазоне
+ Получаем информацию о комитах в этом диапазоне
 ```bash
 git log --pretty=format:'%h %an %ad %s' 85024d3100126de36331c6982bfaac02cdab9e76..33ff1c03bb960b332be3af2e333462dde88b279e
 33ff1c03b tf-release-bot Thu Mar 19 15:04:05 2020 +0000 v0.12.24
@@ -101,13 +101,13 @@ dd01a3507 Kristin Laemmert Thu Mar 5 16:32:43 2020 -0500 Update CHANGELOG.md
 5. Найдите коммит в котором была создана функция `func providerSource`, ее определение в коде выглядит 
 так `func providerSource(...)` (вместо троеточего перечислены аргументы).  
 
-# Ищем файл с данной функцией
+ Ищем файл с данной функцией
 ```bash
 git grep 'func providerSource'
 provider_source.go:func providerSource(configs []*cliconfig.ProviderInstallation, services *disco.Disco) (getproviders.Source, tfdiags.Diagnostics) {
 provider_source.go:func providerSourceForCLIConfigLocation(loc cliconfig.ProviderInstallationLocation, services *disco.Disco) (getproviders.Source, tfdiags.Diagnostics) {
 ```
-# Ищем все изменения данной функции в найденном файле
+ Ищем все изменения данной функции в найденном файле
 ```bash
 git log --oneline -L:providerSource:provider_source.go
 5af1e6234 main: Honor explicit provider_installation CLI config when present
@@ -163,10 +163,10 @@ diff --git a/provider_source.go b/provider_source.go
 +       // locations. That'll come later.
 +       // For now, we have a fixed set of search directories:
 ```
-# Найдено три коммита:
-# 5af1e6234 main: Honor explicit provider_installation CLI config when present
-# 92d6a30bb main: skip direct provider installation for providers available locally
-# 8c928e835 main: Consult local directories as potential mirrors of providers
+ Найдено три коммита:
+ 5af1e6234 main: Honor explicit provider_installation CLI config when present
+ 92d6a30bb main: skip direct provider installation for providers available locally
+ 8c928e835 main: Consult local directories as potential mirrors of providers
 
 6. Найдите все коммиты в которых была изменена функция `globalPluginDirs`.  
 ```bash
@@ -182,7 +182,7 @@ bdfea50cc James Bardin Mon Nov 30 18:02:04 2020 -0500 remove unused
 fd4f7eb0b James Bardin Wed Oct 21 13:06:23 2020 -0400 remove prefixed io
 5ac311e2a Martin Atkins Wed May 3 16:25:41 2017 -0700 main: synchronize writes to VT100-faker on Windows
 ```
-#  Автор Martin Atkins, функция создана в коммите 5ac311e2a
+  Автор Martin Atkins, функция создана в коммите 5ac311e2a
 
 
  ---
