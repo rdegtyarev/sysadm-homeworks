@@ -99,8 +99,69 @@ dd01a3507 Kristin Laemmert Thu Mar 5 16:32:43 2020 -0500 Update CHANGELOG.md
 5. Найдите коммит в котором была создана функция `func providerSource`, ее определение в коде выглядит 
 так `func providerSource(...)` (вместо троеточего перечислены аргументы).  
 ```bash
-git log -S'func providerSource' --oneline
+# Ищем файл с данной функцией
+it grep 'func providerSource'
+provider_source.go:func providerSource(configs []*cliconfig.ProviderInstallation, services *disco.Disco) (getproviders.Source, tfdiags.Diagnostics) {
+provider_source.go:func providerSourceForCLIConfigLocation(loc cliconfig.ProviderInstallationLocation, services *disco.Disco) (getproviders.Source, tfdiags.Diagnostics) {
+# Ищем все изменения данной функции в найденном файле
+git log --oneline -L:providerSource:provider_source.go
+5af1e6234 main: Honor explicit provider_installation CLI config when present
 
+diff --git a/provider_source.go b/provider_source.go
+--- a/provider_source.go
++++ b/provider_source.go
+@@ -20,6 +23,15 @@
+-func providerSource(services *disco.Disco) getproviders.Source {
+-       // We're not yet using the CLI config here because we've not implemented
+-       // yet the new configuration constructs to customize provider search
+-       // locations. That'll come later. For now, we just always use the
+-       // implicit default provider source.
+-       return implicitProviderSource(services)
++func providerSource(configs []*cliconfig.ProviderInstallation, services *disco.Disco) (getproviders.Source, tfdiags.Diagnostics) {
++       if len(configs) == 0 {
++               // If there's no explicit installation configuration then we'll build
++               // up an implicit one with direct registry installation along with
++               // some automatically-selected local filesystem mirrors.
++               return implicitProviderSource(services), nil
++       }
++
++       // There should only be zero or one configurations, which is checked by
++       // the validation logic in the cliconfig package. Therefore we'll just
++       // ignore any additional configurations in here.
++       config := configs[0]
++       return explicitProviderSource(config, services)
++}
++
+92d6a30bb main: skip direct provider installation for providers available locally
+
+diff --git a/provider_source.go b/provider_source.go
+--- a/provider_source.go
++++ b/provider_source.go
+@@ -19,5 +20,6 @@
+ func providerSource(services *disco.Disco) getproviders.Source {
+        // We're not yet using the CLI config here because we've not implemented
+        // yet the new configuration constructs to customize provider search
+-       // locations. That'll come later.
+-       // For now, we have a fixed set of search directories:
++       // locations. That'll come later. For now, we just always use the
++       // implicit default provider source.
++       return implicitProviderSource(services)
+8c928e835 main: Consult local directories as potential mirrors of providers
+
+diff --git a/provider_source.go b/provider_source.go
+--- /dev/null
++++ b/provider_source.go
+@@ -0,0 +19,5 @@
++func providerSource(services *disco.Disco) getproviders.Source {
++       // We're not yet using the CLI config here because we've not implemented
++       // yet the new configuration constructs to customize provider search
++       // locations. That'll come later.
++       // For now, we have a fixed set of search directories:
+
+# Найдено три коммита:
+# 5af1e6234 main: Honor explicit provider_installation CLI config when present
+# 92d6a30bb main: skip direct provider installation for providers available locally
+# 8c928e835 main: Consult local directories as potential mirrors of providers
 ```
 6. Найдите все коммиты в которых была изменена функция `globalPluginDirs`.  
 ```bash
